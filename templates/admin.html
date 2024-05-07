@@ -1,0 +1,78 @@
+{% extends "main.html" %}
+{% block content %}
+{% if users %}
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="/admin?page=0"><<</a></li>
+        {% for i in range(0, users|length, 10) %}
+        {% if loop.index == n %}
+        <li class="page-item active"><a class="page-link">{{ loop.index }}</a></li>
+        {% else %}
+        <li class="page-item"><a class="page-link" href="/admin?page={{ loop.index }}">{{ loop.index }}</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+        {% if table|length % 10 %}
+        {% set last = table|length // 10 %}
+        {% else %}
+        {% set last = table|length // 10 + 1 %}
+        {% endif %}
+        <li class="page-item"><a class="page-link" href="/admin?page={{ last }}">>></a></li>
+    </ul>
+</nav>
+{% set n = n - 1 %}
+{% for j in users[9 * n:9 * (n + 1)] %}
+<div class="row">
+    <div class="card col" style="margin-bottom: 1rem">
+        <div class="card-body" style="width: 100%">
+            <div class="row">
+
+                <div class="col">
+                    <p class="btn btn-primary col" title="{{ j.email }}">{{ j.name }} {{ j.surname }}</p>
+                </div>
+
+                <div class="col">
+                    {% if j.is_admin %}
+                    <p class="btn btn-light col">Админ</p>
+                    {% elif j.is_ban %}
+                    <p class="btn btn-light col">Забанен</p>
+                    {% else %}
+                    <p class="btn btn-light col">Пользователь</p>
+                    {% endif %}
+                </div>
+
+                {% if j == admin %}
+                <div class="col">
+                    <a class="btn btn-danger col">Это вы</a>
+                </div>
+                {% else %}
+                {% if j.is_ban %}
+                <div class="col">
+                    <a href="/admin?page={{ n + 1 }}&ban={{ j.id }}" class="btn btn-danger col">Разбан</a>
+                </div>
+                {% elif j.is_admin %}
+                    <div class="col">
+                        <a class="btn btn-warning col" href="/admin?page={{ n + 1 }}&admin={{ j.id }}">Снять Админку</a>
+                    </div>
+                {% else %}
+                    <div class="col">
+                        <a href="/admin?page={{ n + 1 }}&ban={{ j.id }}" class="btn btn-danger col">Бан</a>
+                    </div>
+                    <div class="col">
+                        <a class="btn btn-warning col" href="/admin?page={{ n + 1 }}&admin={{ j.id }}">Выдать Админку</a>
+                    </div>
+                {% endif %}
+
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+{% else %}
+<img src="{{ url_for('static', filename='default_img' + '/' +  'empty.png') }}"
+     style="margin: 2rem; width: 55rem;"
+     class="rounded mx-auto d-block">
+{% endif %}
+{% endblock %}

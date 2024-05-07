@@ -1,0 +1,23 @@
+{% extends "main.html" %}
+{% block content %}
+<div class="card w-100">
+    <div class="card-body">
+        <h5 class="card-title">{{ user.name}} {{user.surname }}</h5>
+        <p class="card-text" style="margin-bottom: 2rem;">Токен для бота в ТГ: {{ user.token }}
+            <a href="/user?token=1" class="badge badge-primary">Сбросить</a>
+        </p>
+
+        {% if user.is_admin %}
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="/admin" class="btn btn-success px-2" style="width: 8rem; margin-bottom: 1rem;">Админка</a></li>
+        </ul>
+        {% endif %}
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="/logout" class="btn btn-dark px-2" style="width: 8rem;">Выйти</a></li>
+        </ul>
+
+
+    </div>
+</div>
+<p></p>
+{% endblock %}

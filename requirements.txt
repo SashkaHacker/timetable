@@ -1,0 +1,10 @@
+sqlalchemy
+flask
+flask_restful
+flask-wtf
+flask_login
+jsonschema
+pillow
+flask_uploads
+python-telegram-bot
+Alembic

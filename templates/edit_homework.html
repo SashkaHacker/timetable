@@ -1,0 +1,24 @@
+{% extends "main.html" %}
+{% block content %}
+    <form method="post" class="auto_form" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Предмет</label>
+        {{ form.title(class="form-control", autocomplete="off", placeholder="Название занятия", value=table.title) }}
+    </div>
+    <p>Выберите дату</p>
+    <p>{{ form.day(class="form-control", type="date", value=table.day)}}</p>
+    <p>Выберите время</p>
+    <p>{{ form.time(class="form-control", type="time", value=table.time) }}</p>
+    <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Задание</label>
+        {{ form.text(class="form-control", type="text", value=table.homework_text)}}
+    </div>
+    <div class="mb-3">
+        <label for="formFile" class="form-label">Прикрепить изображение</label>
+        {{ form.file(class="form-control", type="file", accept="image/jpeg,image/png,image") }}
+    </div>
+    <div class="button_post">
+        {{ form.submit(type="submit", class="btn btn-dark") }}
+    </div>
+</form>
+{% endblock %}

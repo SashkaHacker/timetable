@@ -1,0 +1,63 @@
+{% extends "main.html" %}
+{% block content %}
+<head>
+    <meta charset='utf-8'/>
+    <link href="{{ url_for('static', filename='css/calendar.css') }}" rel='stylesheet'/>
+    <script src="{{ url_for('static', filename='js/calendar.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/locales-all.js') }}"></script>
+    <script>
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      headerToolbar: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,listMonth',
+
+      },
+
+      locale: 'ru',
+      buttonIcons: false, // show the prev/next text
+      weekNumbers: true,
+      navLinks: true, // can click day/week names to navigate views
+      editable: true,
+      dayMaxEvents: true, // allow "more" link when too many events
+      events: '/jsoncalendar'
+        });
+
+    calendar.render();
+
+
+
+  });
+
+
+    </script>
+    <style>
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+    font-size: 14px;
+  }
+
+
+  #calendar {
+    width: 90%;
+    margin: 40px auto;
+    padding: 0 10px;
+  }
+
+
+    </style>
+</head>
+<body>
+<div class="card">
+    <div id='calendar'></div>
+</div>
+</body>
+{% endblock %}
+
