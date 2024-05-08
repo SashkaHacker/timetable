@@ -243,7 +243,10 @@ def registration():
     if current_user.is_authenticated:
         return redirect("/user")
     form = RegisterForm()
-    if form.validate_on_submit():
+    print('Я тут!')
+    # if form.validate_on_submit():
+    if form.is_submitted():
+        print('Меня тут нет')
         db_sess = db_session.create_session()
         count = len(list(db_sess.query(User).filter(User.email == form.email.data)))
         db_sess.close()
