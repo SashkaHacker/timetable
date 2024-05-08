@@ -1,0 +1,53 @@
+{% extends "main.html" %}
+{% block content %}
+<div class="container">
+    <div class="row" style="margin: 2rem;">
+        <div class="col-sm">
+            <div class="card" style="width: 100%;">
+                <div class="card-body">
+                    <h1 class="card-title">{{ table.title }}</h1>
+                    <p class="card-text">{{ table.homework_text }}</p>
+                </div>
+            </div>
+        </div>
+        {% if table.homework_img %}
+        <div class="col-sm">
+            <div class="card" style="width: 100%;">
+                {% for i in table.homework_img %}
+                <img src="{{ url_for('static', filename='images' + '/' +  table.owner_id|string + '/' + i.hash) }}"
+                     style="margin: 2rem; width: 90%;"
+                     class="rounded mx-auto d-block">
+                <a href="/picture/{{ i.hash }}" target="_blank" class="badge badge-info">Оригинальное изображение</a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    {% if not table.completed %}
+    <div class="row" style="margin-left: 2rem; margin-right: 2rem; margin-bottom: .6rem;">
+        <div class="col-sm">
+            <a href="/edit/{{ table.id }}" class="btn btn-secondary" style="width: 100%">
+                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                Редактировать
+            </a>
+        </div>
+        <div class="col-sm">
+            <form method="post">
+            {{ form.submit(class="btn btn-success", style="width: 100%;") }}
+            {{ form.id(type="hidden", value="hide") }}
+            </form>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="row" style="margin-left: 2rem; margin-right: 2rem;">
+        <div class="col-sm">
+            <form method="post">
+            {{ form.delete(class="btn btn-danger", style="width: 100%;") }}
+            {{ form.id(type="hidden", value="delete") }}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
